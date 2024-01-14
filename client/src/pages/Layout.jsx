@@ -1,11 +1,18 @@
 import { Outlet } from "react-router-dom";
+import { Navbar } from "../components";
+import { Box } from "@mui/material";
 
 const Layout = () => {
   return (
-    <div>
-      <nav>navigation</nav>
+    <Box
+      sx={{
+        maxWidth: "1536px",
+        mx: "auto",
+      }}
+    >
+      <Navbar />
       <Outlet />
-    </div>
+    </Box>
   );
 };
 export default Layout;
