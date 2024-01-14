@@ -1,13 +1,17 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const cors = require("cors");
 
 // db connection
 const sequelize = require("./db/connect");
 
+app.use(express.json());
+app.use(cors());
+
 // TEST
-app.get("/", (req, res) => {
-  res.status(200).send("hello from server");
+app.get("/test", (req, res) => {
+  res.status(200).json({ msg: "hello from server" });
 });
 
 const port = process.env.PORT || 5300;
