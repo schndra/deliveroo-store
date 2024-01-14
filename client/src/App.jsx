@@ -1,27 +1,31 @@
-import { Typography } from "@mui/material";
-import { customFetch } from "./utils";
-import { useEffect } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Error, Layout, Login, Menu, Register } from "./pages";
 
-const url = "/test";
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        index: true,
+        element: <Menu />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+        errorElement: <Error />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+        errorElement: <Error />,
+      },
+    ],
+  },
+]);
 
 function App() {
-  const handleFetch = async () => {
-    const response = await customFetch.get(url);
-    const msg = response.data;
-    console.log(msg);
-  };
-
-  useEffect(() => {
-    handleFetch();
-  }, []);
-
-  return (
-    <>
-      <Typography variant="h4" component="h1" color="primary" gutterBottom>
-        Material UI Vite.js example
-      </Typography>
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
