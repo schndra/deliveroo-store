@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 // import Logo from "../assets/Logo.png";
 import { Box, Button, SvgIcon } from "@mui/material";
 import RightSidebar from "./RightSidebar";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 
 function LightBulbIcon(props) {
   return (
@@ -21,6 +22,18 @@ function LightBulbIcon(props) {
     </SvgIcon>
   );
 }
+function ShoppingCart(props) {
+  return (
+    <SvgIcon {...props}>
+      <svg height="24" width="24" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M14 15V13H10V15H14ZM15 15H19.1872L19.7172 13H15V15ZM14 12V10H15V12H19.9822L20.5122 10H3.48783L4.01783 12H9V10H10V12H14ZM14 18V16H10V18H14ZM15 18H18.3922L18.9222 16H15V18ZM9 15V13H4.28283L4.81283 15H9ZM9 18V16H5.07783L5.60783 18H9ZM7 8V3H17V8H23L20 20H4L1 8H7ZM9 8H15V5H9V8Z"
+          fill="#00CCBC"
+        ></path>
+      </svg>
+    </SvgIcon>
+  );
+}
 
 const Navbar = () => {
   return (
@@ -30,29 +43,67 @@ const Navbar = () => {
         alignItems: "center",
         my: "1rem",
         justifyContent: "space-between",
-        px: "4rem",
+        px: { xs: "1rem", lg: "4rem" },
       }}
     >
-      {/* LOGO  */}
-      {/* <DeliverooLogo
-        sx={{ mr: 1, verticalAlign: "middle", height:"672px", width: "200px" }}
-      /> */}
-      <Link to="/">
+      <Box sx={{ display: "flex", gap: "2rem", alignItems: "center" }}>
+        {/* LOGO  */}
+        <Link to="/">
+          <Button
+            variant="outlined"
+            startIcon={<LightBulbIcon color="primary" />}
+            sx={{
+              textTransform: "lowercase",
+            }}
+          >
+            deliveroo
+          </Button>
+        </Link>
+
+        {/* SEARCH */}
+      </Box>
+
+      <Box sx={{ display: "flex", gap: "2rem" }}>
+        {/* CART */}
         <Button
           variant="outlined"
-          startIcon={<LightBulbIcon color="primary" />}
+          startIcon={<ShoppingCart color="primary" />}
           sx={{
-            textTransform: "lowercase",
+            color: "black",
+            textTransform: "capitalize",
+            border: "1px solid",
+            borderColor: "secondary.100",
+            ":hover": {
+              bgcolor: "white",
+              borderColor: "secondary.200",
+            },
+            display: { xs: "none", lg: "flex" },
           }}
         >
-          deliveroo
+          $14.00
         </Button>
-      </Link>
-      {/* SEARCH */}
-      {/* CART */}
-      {/* SINGUP OR LOG IN  */}
-      {/* ACCOUNT */}
-      <RightSidebar />
+
+        {/* SINGUP OR LOG IN  */}
+        <Button
+          variant="outlined"
+          startIcon={<HomeOutlinedIcon color="primary" />}
+          sx={{
+            color: "black",
+            textTransform: "capitalize",
+            border: "1px solid",
+            borderColor: "secondary.100",
+            ":hover": {
+              bgcolor: "white",
+              borderColor: "secondary.200",
+            },
+            display: { xs: "none", lg: "flex" },
+          }}
+        >
+          Sign up or log in
+        </Button>
+        {/* ACCOUNT */}
+        <RightSidebar />
+      </Box>
     </Box>
   );
 };
