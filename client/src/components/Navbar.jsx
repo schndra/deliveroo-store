@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 // import Logo from "../assets/Logo.png";
-import { Box, Button, SvgIcon } from "@mui/material";
+import { Box, Button, Link, SvgIcon } from "@mui/material";
 import RightSidebar from "./RightSidebar";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import Search from "./Search";
 
-function LightBulbIcon(props) {
+function DeliverooLogoIcon(props) {
   return (
     <SvgIcon {...props}>
       <svg
@@ -37,6 +37,8 @@ function ShoppingCart(props) {
 }
 
 const Navbar = () => {
+  let { pathname } = useLocation();
+
   return (
     <Box
       sx={{
@@ -45,7 +47,10 @@ const Navbar = () => {
         my: "1rem",
         justifyContent: "space-between",
         px: { xs: "1rem", lg: "4rem" },
+        pb: 2,
         gap: 4,
+        borderBottom: 1,
+        borderColor: "secondary.200",
       }}
     >
       <Box
@@ -57,12 +62,17 @@ const Navbar = () => {
         }}
       >
         {/* LOGO  */}
-        <Link to="/">
+        <Link href="/">
           <Button
-            variant="outlined"
-            startIcon={<LightBulbIcon color="primary" />}
+            // variant="outlined"
+            disableRipple
+            size="large"
+            startIcon={<DeliverooLogoIcon color="primary" />}
             sx={{
               textTransform: "lowercase",
+              ":hover": {
+                bgcolor: "white",
+              },
             }}
           >
             deliveroo
@@ -70,32 +80,36 @@ const Navbar = () => {
         </Link>
 
         {/* SEARCH */}
-        <Search />
+        {pathname !== "/login" && <Search />}
       </Box>
 
       <Box sx={{ display: "flex", gap: "1rem" }}>
         {/* CART */}
-        <Button
-          variant="outlined"
-          startIcon={<ShoppingCart color="primary" />}
-          sx={{
-            color: "black",
-            textTransform: "capitalize",
-            border: "1px solid",
-            borderColor: "secondary.100",
-            ":hover": {
-              bgcolor: "white",
-              borderColor: "secondary.200",
-            },
-            display: { xs: "none", lg: "flex" },
-          }}
-        >
-          $14.00
-        </Button>
+        {pathname !== "/login" && (
+          <Button
+            variant="outlined"
+            disableRipple
+            startIcon={<ShoppingCart color="primary" />}
+            sx={{
+              color: "black",
+              textTransform: "capitalize",
+              border: "1px solid",
+              borderColor: "secondary.100",
+              ":hover": {
+                bgcolor: "white",
+                borderColor: "secondary.200",
+              },
+              display: { xs: "none", lg: "flex" },
+            }}
+          >
+            $14.00
+          </Button>
+        )}
 
         {/* SINGUP OR LOG IN  */}
         <Button
           variant="outlined"
+          disableRipple
           startIcon={<HomeOutlinedIcon color="primary" />}
           href="/login"
           sx={{

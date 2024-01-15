@@ -86,7 +86,7 @@ export default function RightSidebar() {
               },
             }}
           >
-            Sign Account
+            Account
           </Button>
           <Drawer
             anchor={anchor}
