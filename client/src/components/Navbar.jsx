@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Box, Button, SvgIcon } from "@mui/material";
 import RightSidebar from "./RightSidebar";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import Search from "./Search";
 
 function LightBulbIcon(props) {
   return (
@@ -44,9 +45,17 @@ const Navbar = () => {
         my: "1rem",
         justifyContent: "space-between",
         px: { xs: "1rem", lg: "4rem" },
+        gap: 4,
       }}
     >
-      <Box sx={{ display: "flex", gap: "2rem", alignItems: "center" }}>
+      <Box
+        sx={{
+          display: "flex",
+          gap: 3,
+          alignItems: "center",
+          flexGrow: "1",
+        }}
+      >
         {/* LOGO  */}
         <Link to="/">
           <Button
@@ -61,9 +70,10 @@ const Navbar = () => {
         </Link>
 
         {/* SEARCH */}
+        <Search />
       </Box>
 
-      <Box sx={{ display: "flex", gap: "2rem" }}>
+      <Box sx={{ display: "flex", gap: "1rem" }}>
         {/* CART */}
         <Button
           variant="outlined"
@@ -87,6 +97,7 @@ const Navbar = () => {
         <Button
           variant="outlined"
           startIcon={<HomeOutlinedIcon color="primary" />}
+          href="/login"
           sx={{
             color: "black",
             textTransform: "capitalize",
@@ -96,7 +107,7 @@ const Navbar = () => {
               bgcolor: "white",
               borderColor: "secondary.200",
             },
-            display: { xs: "none", lg: "flex" },
+            display: { xs: "none", md: "flex" },
           }}
         >
           Sign up or log in
