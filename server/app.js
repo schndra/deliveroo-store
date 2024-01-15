@@ -11,6 +11,10 @@ const sequelize = require("./db/connect");
 
 //routers
 const authRouter = require("./routes/authRouter");
+const userRouter = require("./routes/userRouter");
+
+//middleware
+const errorHandlerMiddleware = require("./middleware/errorHandlerMiddleware");
 const authMiddleware = require("./middleware/authMiddleware");
 
 app.use(morgan("dev"));
@@ -22,6 +26,9 @@ app.use(cookieParser());
 app.get("/test", (req, res) => {
   res.status(200).json({ msg: "hello from server" });
 });
+
+// login and register USERS
+app.use("/api/v1/users", authMiddleware, userRouter);
 app.use("/api/v1/auth", authRouter);
 
 app.use("*", (req, res) => {
