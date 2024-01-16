@@ -12,7 +12,7 @@ const authMiddleware = async (req, res, next) => {
   if (!token) {
     throw new UnauthenticatedError("Authentication Failed");
   }
-  
+
   try {
     const data = jwt.verify(token, process.env.JWT_SECRET_KEY);
     console.log(data);
@@ -22,15 +22,7 @@ const authMiddleware = async (req, res, next) => {
       where: {
         id: Number(data.id),
       },
-      attributes: [
-        "id",
-        "email",
-        "role",
-        "name",
-        "username",
-        "googleId",
-        "provider",
-      ],
+      attributes: { exclude: ["password"] },
     });
 
     req.user = user;
