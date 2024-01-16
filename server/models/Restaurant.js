@@ -17,15 +17,38 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
       },
-      name: DataTypes.STRING,
-      shortDescription: DataTypes.STRING,
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      desc: {
+        type: DataTypes.STRING,
+        validate: {
+          len: [0, 255],
+        },
+      },
       imgUrl: DataTypes.STRING,
       lat: DataTypes.STRING,
       long: DataTypes.STRING,
       address: DataTypes.STRING,
-      rating: DataTypes.INTEGER,
+      rating: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          min: 1,
+          max: 5,
+        },
+      },
+      type: {
+        type: DataTypes.String,
+        allowNull: false,
+        references: {
+          model: "Category",
+          key: "id",
+        },
+      },
     },
     {
       sequelize,

@@ -17,11 +17,19 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
       },
-      name: DataTypes.STRING,
-      desc: DataTypes.STRING,
-      price: DataTypes.STRING,
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      desc: {
+        type: DataTypes.STRING,
+        validate: {
+          len: [0, 255],
+        },
+      },
+      price: DataTypes.INTEGER,
       image: DataTypes.STRING,
     },
     {
