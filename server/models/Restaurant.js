@@ -41,14 +41,6 @@ module.exports = (sequelize, DataTypes) => {
           max: 5,
         },
       },
-      type: {
-        type: DataTypes.String,
-        allowNull: false,
-        references: {
-          model: "Category",
-          key: "id",
-        },
-      },
     },
     {
       sequelize,

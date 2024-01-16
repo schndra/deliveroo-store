@@ -6,6 +6,16 @@ const Restaurant = require("./Restaurant")(sequelize, DataTypes);
 const Dish = require("./Dish")(sequelize, DataTypes);
 const Category = require("./Category")(sequelize, DataTypes);
 
+Category.hasMany(Dish, {
+  foreignKey: "catId",
+});
+
+Dish.belongsTo(Category, {
+  foreignKey: "catId",
+});
+
+
+
 module.exports = {
   User,
   Restaurant,
