@@ -14,7 +14,16 @@ Dish.belongsTo(Category, {
   foreignKey: "catId",
 });
 
-
+Restaurant.belongsToMany(Category, {
+  through: "restaurantcategories",
+  foreignKey: "resId",
+  otherKey: "catId",
+});
+Category.belongsToMany(Restaurant, {
+  through: "restaurantcategories",
+  foreignKey: "catId",
+  otherKey: "restId",
+});
 
 module.exports = {
   User,
