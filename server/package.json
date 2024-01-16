@@ -5,9 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon app.js",
-    "migration:generate": "npx sequelize-cli model:generate",
-    "migration:create": "npx sequelize-cli migration:create",
-    "migrate:create2": "sequelize migration:create",
+    "model:generate": "npx sequelize-cli model:generate",
     "migrate:up": "env-cmd npx sequelize-cli db:migrate",
     "migrate:undo": "env-cmd npx sequelize-cli db:migrate:undo",
     "migrate:undo:all": "env-cmd npx sequelize-cli db:migrate:undo:all"

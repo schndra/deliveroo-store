@@ -36,11 +36,11 @@ exports.register = async (req, res) => {
   const newUser = await User.create(req.body);
 
   //generate jwt token
-  const token = jwt.sign(
-    { id: newUser.id, email: newUser.email, role: newUser.role },
-    process.env.JWT_SECRET_KEY,
-    { expiresIn: "7d" }
-  );
+  // const token = jwt.sign(
+  //   { id: newUser.id, email: newUser.email, role: newUser.role },
+  //   process.env.JWT_SECRET_KEY,
+  //   { expiresIn: "7d" }
+  // );
 
   res.status(StatusCodes.CREATED).json({
     msg: "user created ",
