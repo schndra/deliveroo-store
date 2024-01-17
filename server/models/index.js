@@ -5,6 +5,10 @@ const User = require("./User")(sequelize, DataTypes);
 const Restaurant = require("./Restaurant")(sequelize, DataTypes);
 const Dish = require("./Dish")(sequelize, DataTypes);
 const Category = require("./Category")(sequelize, DataTypes);
+const RestaurantCategory = require("./Restaurantcategory")(
+  sequelize,
+  DataTypes
+);
 
 Category.hasMany(Dish, {
   foreignKey: "catId",
@@ -16,13 +20,15 @@ Dish.belongsTo(Category, {
 
 Restaurant.belongsToMany(Category, {
   through: "restaurantcategories",
-  foreignKey: "resId",
-  otherKey: "catId",
+  foreignKey: "catId",
+  otherKey: "restId",
+  as: "categories",
 });
 Category.belongsToMany(Restaurant, {
   through: "restaurantcategories",
-  foreignKey: "catId",
-  otherKey: "restId",
+  foreignKey: "restId",
+  otherKey: "catId",
+  as: "categories",
 });
 
 module.exports = {
@@ -30,4 +36,5 @@ module.exports = {
   Restaurant,
   Dish,
   Category,
+  RestaurantCategory,
 };
