@@ -44,13 +44,15 @@ const Navbar = () => {
       sx={{
         display: "flex",
         alignItems: "center",
-        my: "1rem",
         justifyContent: "space-between",
         px: { xs: "1rem", lg: "4rem" },
-        pb: 2,
+        py: 2,
         gap: 4,
         borderBottom: 1,
         borderColor: "secondary.200",
+        position: "sticky",
+        top: 0,
+        bgcolor: "white",
       }}
     >
       <Box
