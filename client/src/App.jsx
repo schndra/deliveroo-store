@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Error, Layout, Login, Menu, Register } from "./pages";
+import { Error, Layout, Login, Menu, Register, Restaurants } from "./pages";
 
 const router = createBrowserRouter([
   {
@@ -8,6 +8,10 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        element: <Restaurants />,
+      },
+      {
+        path: "/menu/:id",
         element: <Menu />,
       },
       {
