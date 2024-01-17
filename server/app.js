@@ -17,6 +17,7 @@ const restaurantRouter = require("./routes/restaurantRouter");
 //middleware
 const errorHandlerMiddleware = require("./middleware/errorHandlerMiddleware");
 const authMiddleware = require("./middleware/authMiddleware");
+const { StatusCodes } = require("http-status-codes");
 
 app.use(morgan("dev"));
 app.use(express.json());
@@ -34,7 +35,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/restaurants", restaurantRouter);
 
 app.use("*", (req, res) => {
-  res.status(200).json({ msg: "Not Found" });
+  res.status(StatusCodes.NOT_FOUND).json({ msg: "Not Found" });
 });
 
 app.use(errorHandlerMiddleware);

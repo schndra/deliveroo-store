@@ -4,7 +4,12 @@ const { NotFoundError } = require("../errors/custom-error");
 
 exports.getAllRestaurants = async (req, res) => {
   const r = await Restaurant.findAll({
-    include: [{ model: Category, as: "categories" }],
+    include: [
+      {
+        model: Category,
+        as: "categories",
+      },
+    ],
   });
 
   res.status(StatusCodes.OK).json({
