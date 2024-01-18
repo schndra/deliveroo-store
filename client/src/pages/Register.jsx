@@ -68,6 +68,7 @@ const Register = () => {
           id="password"
           label="password"
           variant="outlined"
+          type="password"
           fullWidth
           sx={{ marginBottom: "1rem" }}
           onChange={handleChange}
