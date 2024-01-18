@@ -114,7 +114,7 @@ const Navbar = () => {
           variant="outlined"
           disableRipple
           startIcon={<HomeOutlinedIcon color="primary" />}
-          href="/login"
+          href="/register"
           sx={{
             color: "black",
             textTransform: "capitalize",
