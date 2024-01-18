@@ -5,7 +5,7 @@ import RightSidebar from "./RightSidebar";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import Search from "./Search";
 
-function DeliverooLogoIcon(props) {
+export function DeliverooLogoIcon(props) {
   return (
     <SvgIcon {...props}>
       <svg

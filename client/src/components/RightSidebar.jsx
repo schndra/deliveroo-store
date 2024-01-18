@@ -1,4 +1,3 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
@@ -8,17 +7,13 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import { useState } from "react";
+import { DeliverooLogoIcon } from "./Navbar";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function RightSidebar() {
-  const [state, setState] = React.useState({
-    // top: false,
-    // left: false,
-    // bottom: false,
-    right: false,
-  });
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -28,75 +23,109 @@ export default function RightSidebar() {
       return;
     }
 
-    setState({ ...state, [anchor]: open });
+    setIsDrawerOpen(open);
+
+    // setState({ ...state, [anchor]: open });
   };
 
   const list = (anchor) => (
     <Box
-      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
+      sx={{ width: 280 }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        <ListItem
+          disablePadding
+          sx={{
+            pb: 0.8,
+          }}
+        >
+          <ListItemButton component="a" href="/">
+            <ListItemIcon>
+              <DeliverooLogoIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary="Deliveroo"
+              primaryTypographyProps={{
+                fontSize: 20,
+                fontWeight: "medium",
+                letterSpacing: 0,
+                color: "primary.main",
+              }}
+            />
+            <ListItemIcon>
+              <CloseIcon sx={{ color: "primary.main" }} />
+            </ListItemIcon>
+          </ListItemButton>
+        </ListItem>
       </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
+      <Divider
+        sx={{
+          mb: 2,
+        }}
+      />
+
+      <ListItem
+        disablePadding
+        sx={{
+          px: 2,
+        }}
+      >
+        <ListItemButton
+          component="a"
+          href="/login"
+          sx={{
+            textAlign: "center",
+            backgroundColor: "primary.main",
+            color: "white",
+            borderRadius: "0.325rem",
+            ":hover": {
+              backgroundColor: "#00c2b3",
+            },
+          }}
+        >
+          <ListItemText
+            primary="Sign up or log in"
+            primaryTypographyProps={{
+              fontSize: 16,
+              fontWeight: 500,
+              letterSpacing: 0,
+              color: "white",
+            }}
+          />
+        </ListItemButton>
+      </ListItem>
     </Box>
   );
 
   return (
-    <div>
-      {["right"].map((anchor) => (
-        <React.Fragment key={anchor}>
-          {/* <Button onClick={toggleDrawer(anchor, true)}>Account</Button> */}
-          <Button
-            variant="outlined"
-            onClick={toggleDrawer(anchor, true)}
-            startIcon={<PersonOutlineIcon color="primary" />}
-            sx={{
-              color: "black",
-              textTransform: "capitalize",
-              border: "1px solid",
-              borderColor: "secondary.100",
-              ":hover": {
-                bgcolor: "white",
-                borderColor: "secondary.200",
-              },
-            }}
-          >
-            Account
-          </Button>
-          <Drawer
-            anchor={anchor}
-            open={state[anchor]}
-            onClose={toggleDrawer(anchor, false)}
-          >
-            {list(anchor)}
-          </Drawer>
-        </React.Fragment>
-      ))}
-    </div>
+    <>
+      <Button
+        variant="outlined"
+        onClick={toggleDrawer("right", "true")}
+        startIcon={<PersonOutlineIcon color="primary" />}
+        sx={{
+          color: "black",
+          textTransform: "capitalize",
+          border: "1px solid",
+          borderColor: "secondary.100",
+          ":hover": {
+            bgcolor: "white",
+            borderColor: "secondary.200",
+          },
+        }}
+      >
+        Account
+      </Button>
+      <Drawer
+        anchor={"right"}
+        open={isDrawerOpen}
+        onClose={toggleDrawer("right", false)}
+      >
+        {list("right")}
+      </Drawer>
+    </>
   );
 }
