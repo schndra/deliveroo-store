@@ -18,8 +18,23 @@ const Restaurants = () => {
         p: 4,
       }}
     >
-      <Button href="/menu/1" variant="contained">
-        Click here to see restaurant menu
+      <Button
+        variant="contained"
+        href="/menu/1"
+        sx={{
+          width: "100%",
+          backgroundColor: "#000000e6",
+          color: "white",
+          py: 2,
+          px: 1,
+          marginTop: 1,
+          marginBottom: 1,
+          fontWeight: 500,
+          textTransform: "none",
+          "&:hover": { backgroundColor: "#000000e6" },
+        }}
+      >
+        Go to restaurant
       </Button>
     </Box>
   );

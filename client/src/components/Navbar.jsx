@@ -53,6 +53,7 @@ const Navbar = () => {
         position: "sticky",
         top: 0,
         bgcolor: "white",
+        zIndex: 20,
       }}
     >
       <Box
@@ -82,12 +83,12 @@ const Navbar = () => {
         </Link>
 
         {/* SEARCH */}
-        {pathname !== "/login" && <Search />}
+        {pathname !== "/register" && <Search />}
       </Box>
 
       <Box sx={{ display: "flex", gap: "1rem" }}>
         {/* CART */}
-        {pathname !== "/login" && (
+        {pathname !== "/register" && (
           <Button
             variant="outlined"
             disableRipple

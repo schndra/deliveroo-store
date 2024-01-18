@@ -75,7 +75,7 @@ export default function RightSidebar() {
       >
         <ListItemButton
           component="a"
-          href="/login"
+          href="/register"
           sx={{
             textAlign: "center",
             backgroundColor: "primary.main",

@@ -1,17 +1,10 @@
-import {
-  Box,
-  Button,
-  Container,
-  Divider,
-  Link,
-  SvgIcon,
-  Typography,
-} from "@mui/material";
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
+import { Box, Button, Divider, SvgIcon, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 import AppleIcon from "@mui/icons-material/Apple";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
-
-export const ContinueWithEmail = () => {};
 
 export function GoogleIcon(props) {
   return (
@@ -43,7 +36,7 @@ export function GoogleIcon(props) {
   );
 }
 
-export const SocialLoginButtons = () => {
+export const SocialLoginButtons = ({ handleRegisterWithEmail }) => {
   return (
     <Box>
       <Button
@@ -121,6 +114,7 @@ export const SocialLoginButtons = () => {
           "&:hover": { backgroundColor: "#00c2b3" },
         }}
         startIcon={<MailOutlineIcon />}
+        onClick={handleRegisterWithEmail}
       >
         Continue with Email
       </Button>
@@ -143,33 +137,3 @@ export const SocialLoginButtons = () => {
     </Box>
   );
 };
-
-const Login = () => {
-  // const [email, setEmail] = useState("");
-
-  return (
-    <>
-      <Container maxWidth="xs">
-        <Box
-          sx={{
-            marginTop: 8,
-            marginBottom: 8,
-            display: "flex",
-            flexDirection: "column",
-            // backgroundColor: "red",
-          }}
-        >
-          <Typography
-            component="h1"
-            sx={{ mt: 2, mb: 2, fontSize: "20px", fontWeight: "600" }}
-          >
-            Sign up or log in
-          </Typography>
-
-          <SocialLoginButtons />
-        </Box>
-      </Container>
-    </>
-  );
-};
-export default Login;
