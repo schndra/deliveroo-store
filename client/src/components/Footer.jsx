@@ -42,7 +42,7 @@ export const SocialIcons = () => {
 
 export const FooterCard = ({ item }) => {
   const { mainTitle, links, item_index } = item;
-  console.log(mainTitle, links);
+  // console.log(mainTitle, links);
   return (
     <Grid item xs={12} sm={4} md={4} lg={3} xl={2}>
       <Card

@@ -1,7 +1,10 @@
+import { useSelector, useDispatch } from "react-redux";
 /* eslint-disable no-unused-vars */
 import { Button, Container, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SocialLoginButtons } from "../components/SocialLoginButtons";
+import { loginUser } from "../feature/user/userSlice";
+import { Navigate, redirect, useNavigate } from "react-router-dom";
 
 const initialState = {
   name: "",
@@ -11,8 +14,20 @@ const initialState = {
 };
 
 const Register = () => {
+  const { isLoading, user } = useSelector((state) => state.user);
+  console.log(user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // console.log(user, "x");
   const [values, setValues] = useState(initialState);
   const [isValidEmail, setIsValidEmail] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   const validateEmail = (input) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -20,13 +35,13 @@ const Register = () => {
   };
 
   const handleChange = (e) => {
-    console.log(e.target["id"]);
-    console.log(e.target.value);
+    // console.log(e.target["id"]);
+    // console.log(e.target.value);
     setValues({ ...values, [e.target.id]: e.target.value });
     if (e.target["id"] === "email") {
       setIsValidEmail(validateEmail(e.target.value));
     }
-    console.log(values);
+    // console.log(values);
   };
 
   const handleRegisterWithEmail = () => {
@@ -35,7 +50,12 @@ const Register = () => {
 
   const submit = (e) => {
     e.preventDefault();
-    console.log(e.target);
+    const { name, email, password, isRegisterWithEmail } = values;
+
+    if (isRegisterWithEmail) {
+      dispatch(loginUser({ email, password }));
+      return;
+    }
   };
 
   return (
@@ -88,6 +108,8 @@ const Register = () => {
               backgroundColor: "#00c2b3",
             },
           }}
+          type="submit"
+          onClick={submit}
         >
           continue
         </Button>

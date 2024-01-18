@@ -4,6 +4,8 @@ import { Box, Button, Link, SvgIcon } from "@mui/material";
 import RightSidebar from "./RightSidebar";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import Search from "./Search";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../feature/user/userSlice";
 
 export function DeliverooLogoIcon(props) {
   return (
@@ -38,6 +40,8 @@ function ShoppingCart(props) {
 
 const Navbar = () => {
   let { pathname } = useLocation();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
 
   return (
     <Box
@@ -110,25 +114,47 @@ const Navbar = () => {
         )}
 
         {/* SINGUP OR LOG IN  */}
-        <Button
-          variant="outlined"
-          disableRipple
-          startIcon={<HomeOutlinedIcon color="primary" />}
-          href="/register"
-          sx={{
-            color: "black",
-            textTransform: "capitalize",
-            border: "1px solid",
-            borderColor: "secondary.100",
-            ":hover": {
-              bgcolor: "white",
-              borderColor: "secondary.200",
-            },
-            display: { xs: "none", md: "flex" },
-          }}
-        >
-          Sign up or log in
-        </Button>
+        {!user ? (
+          <Button
+            variant="outlined"
+            disableRipple
+            startIcon={<HomeOutlinedIcon color="primary" />}
+            href="/register"
+            sx={{
+              color: "black",
+              textTransform: "capitalize",
+              border: "1px solid",
+              borderColor: "secondary.100",
+              ":hover": {
+                bgcolor: "white",
+                borderColor: "secondary.200",
+              },
+              display: { xs: "none", md: "flex" },
+            }}
+          >
+            Sign up or log in
+          </Button>
+        ) : (
+          <Button
+            variant="outlined"
+            disableRipple
+            startIcon={<HomeOutlinedIcon color="primary" />}
+            sx={{
+              color: "black",
+              textTransform: "capitalize",
+              border: "1px solid",
+              borderColor: "secondary.100",
+              ":hover": {
+                bgcolor: "white",
+                borderColor: "secondary.200",
+              },
+              display: { xs: "none", md: "flex" },
+            }}
+            onClick={() => dispatch(logoutUser())}
+          >
+            Sign Out
+          </Button>
+        )}
         {/* ACCOUNT */}
         <RightSidebar />
       </Box>
