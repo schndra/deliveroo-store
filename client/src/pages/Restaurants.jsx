@@ -15,9 +15,12 @@ const Restaurants = () => {
     <Box
       sx={{
         height: "18vh",
+        p: 4,
       }}
     >
-      <Button href="/menu/1">Go To a restaurant</Button>
+      <Button href="/menu/1" variant="contained">
+        Click here to see restaurant menu
+      </Button>
     </Box>
   );
 };
