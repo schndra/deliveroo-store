@@ -1,4 +1,4 @@
-import { AppBar, Box, Button, Toolbar, makeStyles } from "@mui/material";
+import { AppBar, Box, Button, Toolbar } from "@mui/material";
 
 const navItems = [
   { link: "#", text: "New Daily Specials" },
@@ -35,7 +35,7 @@ const MenuNavigation = () => {
                   textTransform: "none",
                   ":hover": {
                     backgroundColor: "white",
-                    color: "#00c2b3",
+                    color: "primary.light",
                   },
                 }}
               >

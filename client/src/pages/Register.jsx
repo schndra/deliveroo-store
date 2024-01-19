@@ -105,7 +105,7 @@ const Register = () => {
             marginBottom: 1,
             fontWeight: 500,
             ":hover": {
-              backgroundColor: "#00c2b3",
+              backgroundColor: "primary.light",
             },
           }}
           type="submit"

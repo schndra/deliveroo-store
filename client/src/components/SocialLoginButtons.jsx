@@ -111,7 +111,7 @@ export const SocialLoginButtons = ({ handleRegisterWithEmail }) => {
           marginBottom: 1,
           fontWeight: 500,
           textTransform: "none",
-          "&:hover": { backgroundColor: "#00c2b3" },
+          "&:hover": { backgroundColor: "primary.light" },
         }}
         startIcon={<MailOutlineIcon />}
         onClick={handleRegisterWithEmail}

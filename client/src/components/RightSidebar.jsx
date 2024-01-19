@@ -82,7 +82,7 @@ export default function RightSidebar() {
             color: "white",
             borderRadius: "0.325rem",
             ":hover": {
-              backgroundColor: "#00c2b3",
+              backgroundColor: "primary.light",
             },
           }}
         >
