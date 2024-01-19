@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 const serverUrl = "http://localhost:5300/api/v1";
 
 export const customFetch = axios.create({
@@ -11,7 +10,6 @@ export const footerItems = [
   {
     mainTitle: "Discover Deliveroo",
     links: [
-      { title: "Discover Deliveroo", url: "#" },
       { title: "Investors", url: "#" },
       { title: "About us", url: "#" },
       { title: "Takeaway", url: "#" },
@@ -52,28 +50,27 @@ export const footerItems = [
     mainTitle: "Take Deliveroo with you",
     links: [
       {
-        title: "app store",
+        title: "APP_STORE",
         url: "#",
       },
       {
-        title: "play store",
+        title: "PLAY_STORE",
         url: "#",
       },
     ],
   },
 ];
 
-
 export const addUserToLocalStorage = (user) => {
-  localStorage.setItem('user', JSON.stringify(user));
+  localStorage.setItem("user", JSON.stringify(user));
 };
 
 export const removeUserFromLocalStorage = () => {
-  localStorage.removeItem('user');
+  localStorage.removeItem("user");
 };
 
 export const getUserFromLocalStorage = () => {
-  const result = localStorage.getItem('user');
+  const result = localStorage.getItem("user");
   const user = result ? JSON.parse(result) : null;
   return user;
 };
