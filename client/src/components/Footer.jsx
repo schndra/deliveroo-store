@@ -1,19 +1,28 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { Box, Card, CardContent, Grid, Link, Typography } from "@mui/material";
-import { footerItems } from "../utils";
-import PlayStoreIcon from "../assets/play-store.png";
-import AppStoreIcon from "../assets/apple-store.png";
+import { useTheme } from "@emotion/react";
+import {
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  Link,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
-import { blue } from "@mui/material/colors";
+import { footerItems } from "../utils";
+import PlayStoreIcon from "../assets/play-store.png";
+import AppStoreIcon from "../assets/apple-store.png";
 
 export const SocialIcons = () => {
   return (
-    <Box sx={{ display: "flex", gap: 2, pb: 2, pl: 22 }}>
+    <Grid container sx={{ pl: 2, pt: 2, gap: 1 }}>
       <FacebookRoundedIcon
         sx={{
+          color: "white",
           ":hover": {
             cursor: "pointer",
             color: "#1877f2",
@@ -22,6 +31,7 @@ export const SocialIcons = () => {
       />
       <TwitterIcon
         sx={{
+          color: "white",
           ":hover": {
             cursor: "pointer",
             color: "#1da1f2",
@@ -30,93 +40,67 @@ export const SocialIcons = () => {
       />
       <InstagramIcon
         sx={{
+          color: "white",
           ":hover": {
             cursor: "pointer",
             color: "#c13584",
           },
         }}
       />
-    </Box>
+    </Grid>
   );
 };
 
-export const FooterCard = ({ item }) => {
+const FooterCard = ({ item }) => {
   const { mainTitle, links, item_index } = item;
-  // console.log(mainTitle, links);
+
+  const mainCard = {
+    backgroundColor: "#434848",
+    minHeight: 425,
+  };
+
+  const cardContentSyles = {
+    display: "flex",
+    flexDirection: "column",
+    color: "white",
+  };
+
+  const linkStyles = {
+    color: "white",
+    mb: ".150rem",
+    ":hover": {
+      color: "primary.main",
+    },
+  };
+
   return (
-    <Grid item xs={12} sm={4} md={4} lg={3} xl={2}>
-      <Card
-        sx={{
-          minWidth: 275,
-          display: "block",
-          bgcolor: "#434848",
-          minHeight: 425,
-        }}
-      >
-        <CardContent sx={{}}>
-          {item_index !== 3 && (
-            <Typography
-              sx={{
-                fontSize: "1.2rem",
-                color: "white",
-                mb: 2,
-                fontWeight: 500,
-              }}
-            >
-              {mainTitle}
-            </Typography>
-          )}
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            {item_index !== 3 &&
-              links.map((item, index) => {
-                return (
-                  <Link
-                    key={index}
-                    href={item.url}
-                    underline="none"
-                    sx={{
-                      color: "white",
-                      mb: ".150rem",
-                      ":hover": {
-                        color: "primary.main",
-                      },
-                    }}
-                  >
-                    {item.title}
-                  </Link>
-                );
-              })}
-          </Box>
-
-          {item_index === 3 && (
-            <>
-              <Typography
-                sx={{ fontSize: "1rem", color: "white", fontWeight: 500 }}
-              >
-                {mainTitle}
-              </Typography>
-
-              <Link href="#">
-                <img
-                  src={AppStoreIcon}
-                  style={{ width: 140 }}
-                  alt="app store"
-                />
-              </Link>
-              <Link href="#">
-                <img
-                  src={PlayStoreIcon}
-                  style={{ width: 140 }}
-                  alt="play store"
-                />
-              </Link>
-            </>
-          )}
+    <Grid item xs={12} sm={6} md={3}>
+      <Card sx={mainCard}>
+        <CardContent sx={cardContentSyles}>
+          <Typography variant="h6">{mainTitle}</Typography>
+          {links.map((link, i) => {
+            const { title, url } = link;
+            if (item_index !== 3) {
+              return (
+                <Link href={url} key={i} underline="none" sx={linkStyles}>
+                  <Typography variant="p" fontSize={"14px"} lineHeight={"19px"}>
+                    {title}
+                  </Typography>
+                </Link>
+              );
+            }
+            if (item_index === 3) {
+              return (
+                <Link href={url} key={i} underline="none" sx={linkStyles}>
+                  <img
+                    src={title === "APP_STORE" ? AppStoreIcon : PlayStoreIcon}
+                    style={{ width: 140 }}
+                    alt={title}
+                  />
+                </Link>
+              );
+            }
+          })}
         </CardContent>
       </Card>
     </Grid>
@@ -124,41 +108,22 @@ export const FooterCard = ({ item }) => {
 };
 
 const Footer = () => {
-  return (
-    <Box
-      sx={{
-        bgcolor: "secondary.300",
-      }}
-    >
-      <Grid
-        container
-        spacing={2}
-        sx={{
-          mt: 3,
-          pb: 2,
-          // px: 2,
-          display: { xl: "flex" },
-          gap: {
-            xl: 6,
-          },
+  const theme = useTheme();
+  const isDesktopScreen = useMediaQuery(theme.breakpoints.up("lg"));
 
-          justifyContent: "center",
-        }}
-      >
-        {footerItems.map((item, index) => {
-          return (
-            <FooterCard key={index} item={{ ...item, item_index: index }} />
-          );
-        })}
-      </Grid>
-      <Box
-        sx={{
-          display: { xs: "none", md: "block" },
-        }}
-      >
-        <SocialIcons />
-      </Box>
-    </Box>
+  const mainContainer = {
+    bgcolor: "secondary.300",
+    px: isDesktopScreen ? 22 : 2,
+    pb: 2,
+  };
+
+  return (
+    <Grid container spacing={2} sx={mainContainer}>
+      {footerItems.map((item, index) => {
+        return <FooterCard key={index} item={{ ...item, item_index: index }} />;
+      })}
+      <SocialIcons />
+    </Grid>
   );
 };
 export default Footer;
