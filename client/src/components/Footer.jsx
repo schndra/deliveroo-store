@@ -112,8 +112,9 @@ const Footer = () => {
   const isDesktopScreen = useMediaQuery(theme.breakpoints.up("lg"));
 
   const mainContainer = {
-    bgcolor: "secondary.300",
+    bgcolor: "secondary.main",
     px: isDesktopScreen ? 22 : 2,
+    pt: 2,
     pb: 2,
   };
 

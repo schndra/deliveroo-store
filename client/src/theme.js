@@ -18,7 +18,7 @@ const theme = createTheme({
       //button border colors
       100: "#e8ebeb",
       200: "#d1d4d4",
-      300: "#2e3333",
+      300: "#585c5c",
     },
     error: {
       main: red.A400,

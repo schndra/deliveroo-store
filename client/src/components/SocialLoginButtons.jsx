@@ -118,7 +118,7 @@ export const SocialLoginButtons = ({ handleRegisterWithEmail }) => {
       >
         Continue with Email
       </Button>
-      <Typography sx={{ mt: "1rem", fontSize: "13px", color: "#585c5c" }}>
+      <Typography sx={{ mt: "1rem", fontSize: "13px", color: "secondary.300" }}>
         By continuing you agree to our{" "}
         <Link href="#" underline="always" sx={{ color: "primary.main" }}>
           T&Cs
