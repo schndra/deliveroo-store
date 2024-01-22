@@ -1,14 +1,109 @@
+/* eslint-disable react/prop-types */
 import {
   Box,
   Button,
   Fab,
   Grid,
+  Modal,
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import HotFood from "../assets/food.png";
 import { useTheme } from "@emotion/react";
+import { useState } from "react";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import StarIcon from "@mui/icons-material/Star";
+
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
+const BasicModal = ({ buttonInfo }) => {
+  // console.log(buttonInfo.title);
+  const { title, icon, subTitle, id } = buttonInfo;
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  return (
+    <div>
+      <Button
+        onClick={handleOpen}
+        startIcon={icon}
+        endIcon={
+          <ArrowForwardIosIcon
+            sx={{
+              flex: 1,
+            }}
+          />
+        }
+        sx={{
+          width: {
+            xs: "100%",
+            sm: "inherit",
+          },
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            // width: "100%",
+            flex: 2,
+          }}
+        >
+          <Typography
+            variant="caption"
+            fontSize={"16px"}
+            sx={{
+              textAlign: "left",
+              color: id === "review" ? "secondary.dark" : "secondary.main",
+              textTransform: "none",
+            }}
+          >
+            {title}
+          </Typography>
+          <Typography
+            variant="caption"
+            fontSize={"14px"}
+            sx={{
+              textAlign: "left",
+              color: "secondary.300",
+              textTransform: "none",
+            }}
+          >
+            {subTitle}
+          </Typography>
+        </Box>
+      </Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Text in a modal
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+          </Typography>
+        </Box>
+      </Modal>
+    </div>
+  );
+};
 
 const MenuHeader = () => {
   const theme = useTheme();
@@ -139,7 +234,7 @@ const MenuHeader = () => {
             flexWrap: "wrap",
             alignItems: "center",
             gap: 0.6,
-            color: "#585c5c",
+            color: "secondary.300",
           }}
         >
           <Typography variant="caption" fontSize={"16px"} fontWeight={400}>
@@ -182,6 +277,25 @@ const MenuHeader = () => {
             $0.49 delivery
           </Typography>
         </Box>
+        {/* info modal */}
+        <BasicModal
+          buttonInfo={{
+            id: "info",
+            title: "Info",
+            subTitle: " Map, allegens and hygiene rating",
+            icon: <InfoOutlinedIcon sx={{ flex: 1, color: "secondary.300" }} />,
+          }}
+        />
+        {/* review modal */}
+        <BasicModal
+          buttonInfo={{
+            id: "review",
+            title: "4.8 Excellent",
+            subTitle: "See all 500 reviews",
+            icon: <StarIcon sx={{ flex: 1, color: "secondary.dark" }} />,
+          }}
+        />
+        {/* <BasicModal /> */}
       </Grid>
       <Grid
         item
