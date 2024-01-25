@@ -15,6 +15,8 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import StarIcon from "@mui/icons-material/Star";
+import DeliveryIcon from "../assets/delivery-icon.svg";
+import GroupIcon from "@mui/icons-material/Group";
 
 const modalStyle = {
   position: "absolute",
@@ -295,7 +297,6 @@ const MenuHeader = () => {
             icon: <StarIcon sx={{ flex: 1, color: "secondary.dark" }} />,
           }}
         />
-        {/* <BasicModal /> */}
       </Grid>
       <Grid
         item
@@ -307,10 +308,73 @@ const MenuHeader = () => {
           display: {
             xs: "none",
             md: "block",
+            position: "relative",
           },
         }}
       >
-        item3
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "end",
+            gap: "1rem",
+          }}
+        >
+          <Box
+            sx={{
+              width: "28px",
+              height: "28px",
+            }}
+          >
+            <img
+              src={DeliveryIcon}
+              alt="delivery icon"
+              style={{
+                width: "100%",
+                height: "100%",
+              }}
+            />
+          </Box>
+          <Typography variant="caption" fontSize={"16px"} fontWeight={400}>
+            Deliver in 25 - 45 min Change
+          </Typography>
+          <Button
+            disableRipple
+            sx={{
+              backgroundColor: "white",
+              fontSize: "16px",
+              fontWeight: 400,
+              textTransform: "capitalize",
+              ":hover": {
+                backgroundColor: "white",
+              },
+            }}
+          >
+            Change
+          </Button>
+        </Box>
+        <Button
+          variant="outlined"
+          disableRipple
+          startIcon={<GroupIcon color="primary" />}
+          href="/"
+          sx={{
+            color: "black",
+            textTransform: "capitalize",
+            border: "1px solid",
+            borderColor: "secondary.100",
+            maxWidth: "250px",
+            ":hover": {
+              bgcolor: "white",
+              borderColor: "secondary.200",
+            },
+            display: { xs: "none", md: "flex" },
+            position: "absolute",
+            right: 0,
+          }}
+        >
+          Start Group Order
+        </Button>
       </Grid>
     </Grid>
   );
