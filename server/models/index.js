@@ -2,6 +2,7 @@ const sequelize = require("../db/connect");
 const { DataTypes } = require("sequelize");
 
 const User = require("./User")(sequelize, DataTypes);
+const Token = require("./Token")(sequelize, DataTypes);
 const Restaurant = require("./Restaurant")(sequelize, DataTypes);
 const Dish = require("./Dish")(sequelize, DataTypes);
 const Category = require("./Category")(sequelize, DataTypes);
@@ -16,6 +17,14 @@ Category.hasMany(Dish, {
 
 Dish.belongsTo(Category, {
   foreignKey: "catId",
+});
+
+User.hasOne(Token, {
+  foreignKey: "userId",
+});
+
+Token.belongsTo(User, {
+  foreignKey: "userId",
 });
 
 Restaurant.belongsToMany(Category, {
@@ -37,4 +46,5 @@ module.exports = {
   Dish,
   Category,
   RestaurantCategory,
+  Token,
 };

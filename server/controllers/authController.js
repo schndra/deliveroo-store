@@ -1,6 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 
 const {
   NotFoundError,
@@ -10,6 +11,8 @@ const {
 
 //models
 const { User } = require("../models");
+const { Token } = require("../models");
+const { createJWT, attachCookie } = require("../utils/jwt");
 
 exports.register = async (req, res) => {
   const { email, password } = req.body;
@@ -73,16 +76,77 @@ exports.login = async (req, res) => {
     throw new UnauthenticatedError("invalid password");
   }
 
-  const token = jwt.sign(
-    { id: user.id, email: user.email, role: user.role },
-    process.env.JWT_SECRET_KEY,
-    { expiresIn: "7d" }
-  );
+  // const token = jwt.sign(
+  //   { id: user.id, email: user.email, role: user.role },
+  //   process.env.JWT_SECRET_KEY,
+  //   { expiresIn: "7d" }
+  // );
+  // create refresh token
+  let refreshToken = "";
 
-  res.cookie("token", token, {
-    httpOnly: true,
-    expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
-    secure: false,
+  const existingToken = await Token.findOne({
+    where: {
+      userId: Number(user.id),
+    },
+    // attributes: { exclude: ["password"] },
+  });
+
+  if (existingToken) {
+    refreshToken = existingToken.refreshToken;
+
+    attachCookie({
+      res,
+      user: {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+      },
+      refreshToken,
+    });
+
+    res.status(StatusCodes.OK).json({
+      user: {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+      },
+      existingToken,
+      // token: createdToken,
+      // jwtToken,
+      // token,
+    });
+    return;
+  }
+
+  //create token
+  refreshToken = crypto.randomBytes(50).toString("hex");
+  const userToken = { refreshToken, userId: user.id };
+  await Token.create(userToken);
+
+  // const jwtToken = createJWT({
+  //   payload: {
+  //     id: user.id,
+  //     email: user.email,
+  //     role: user.role,
+  //   },
+  // });
+
+  // console.log(jwtToken);
+
+  // res.cookie("token", jwtToken, {
+  //   httpOnly: true,
+  //   expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+  //   secure: false,
+  // });
+
+  attachCookie({
+    res,
+    user: {
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    },
+    refreshToken,
   });
 
   res.status(StatusCodes.OK).json({
@@ -91,6 +155,9 @@ exports.login = async (req, res) => {
       email: user.email,
       role: user.role,
     },
+    existingToken,
+    // token: createdToken,
+    // jwtToken,
     // token,
   });
 };
