@@ -163,7 +163,18 @@ exports.login = async (req, res) => {
 };
 
 exports.logout = async (req, res) => {
-  res.cookie("token", "logout", {
+    const deletedToken = await Token.destroy({
+    where: {
+      userId: Number(req.user.id),
+    },
+  });
+
+  res.cookie("accessToken", "logout", {
+    httpOnly: true,
+    expires: new Date(Date.now()),
+    secure: false,
+  });
+  res.cookie("refreshToken", "logout", {
     httpOnly: true,
     expires: new Date(Date.now()),
     secure: false,
@@ -171,5 +182,7 @@ exports.logout = async (req, res) => {
 
   res.status(StatusCodes.OK).json({
     msg: "successfuly logged out",
+    // user: req.user,
+    deletedToken,
   });
 };
