@@ -46,8 +46,8 @@ exports.register = async (req, res) => {
   // );
 
   res.status(StatusCodes.CREATED).json({
-    msg: "user created ",
-    user: newUser.toJSON(),
+    msg: "successfully created user",
+    // user: newUser.toJSON(),
     // token,
   });
 };
@@ -163,7 +163,7 @@ exports.login = async (req, res) => {
 };
 
 exports.logout = async (req, res) => {
-    const deletedToken = await Token.destroy({
+  const deletedToken = await Token.destroy({
     where: {
       userId: Number(req.user.id),
     },

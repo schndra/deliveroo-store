@@ -1,33 +1,29 @@
 import { useSelector, useDispatch } from "react-redux";
 /* eslint-disable no-unused-vars */
-import { Button, Container, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { SocialLoginButtons } from "../components/SocialLoginButtons";
-import { loginUser } from "../feature/user/userSlice";
+import { loginUser, registerUser } from "../feature/user/userSlice";
 import { Navigate, redirect, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const initialState = {
   name: "",
   email: "",
   password: "",
   isRegisterWithEmail: false,
+  isMember: true,
 };
 
 const Register = () => {
-  const { isLoading, user } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user);
   console.log(user);
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // console.log(user, "x");
   const [values, setValues] = useState(initialState);
   const [isValidEmail, setIsValidEmail] = useState(false);
-
-  // useEffect(() => {
-  //   if (user) {
-  //     navigate("/");
-  //   }
-  // }, [user, navigate]);
 
   const validateEmail = (input) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -48,14 +44,24 @@ const Register = () => {
     setValues({ ...values, isRegisterWithEmail: true });
   };
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    const { name, email, password, isRegisterWithEmail } = values;
+    const { isMember, name, email, password, isRegisterWithEmail } = values;
 
-    if (isRegisterWithEmail) {
+    if ((!isMember && !name) || !password) {
+      toast.error("Please fill all fields");
+      return;
+    }
+    if (isRegisterWithEmail && isMember) {
+      //log in user
+      console.log("log in");
       dispatch(loginUser({ email, password }));
       return;
     }
+
+    dispatch(registerUser({ email, password, name }));
+    setValues(initialState);
+    // navigate("/register");
   };
 
   return (
@@ -71,8 +77,22 @@ const Register = () => {
         component="h1"
         sx={{ mt: 2, mb: 2, fontSize: "20px", fontWeight: "600" }}
       >
-        Sign up or log in
+        {values.isRegisterWithEmail && !values.isMember
+          ? "Sign up"
+          : values.isRegisterWithEmail && values.isMember
+          ? "Log In"
+          : "Sign up or log in"}
       </Typography>
+      {values.isRegisterWithEmail && !values.isMember && (
+        <TextField
+          id="name"
+          label="name"
+          variant="outlined"
+          fullWidth
+          sx={{ marginBottom: "1rem" }}
+          onChange={handleChange}
+        />
+      )}
       {values.isRegisterWithEmail && (
         <TextField
           id="email"
@@ -135,6 +155,28 @@ const Register = () => {
           Forgot password?
         </Button>
       )}
+      {values.isRegisterWithEmail && (
+        <Box sx={{ textAlign: "right" }}>
+          <Typography variant="caption" gutterBottom color={"secondary.300"}>
+            {values.isRegisterWithEmail && values.isMember
+              ? " Do not have an account yet?"
+              : "already Have an account ?"}
+          </Typography>
+          <Button
+            variant="text"
+            sx={{
+              textTransform: "capitalize",
+              fontSize: "12px",
+            }}
+            onClick={() => setValues({ ...values, isMember: !values.isMember })}
+          >
+            {values.isRegisterWithEmail && values.isMember
+              ? "Register"
+              : "Log In"}
+          </Button>
+        </Box>
+      )}
+
       {!values.isRegisterWithEmail && (
         <SocialLoginButtons handleRegisterWithEmail={handleRegisterWithEmail} />
       )}

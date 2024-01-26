@@ -7,12 +7,25 @@ import {
   removeUserFromLocalStorage,
 } from "../../utils";
 import { toast } from "react-toastify";
+import { Navigate } from "react-router-dom";
 // import { customFetch } from "../../utils";
 
 const initialState = {
   isLoading: false,
   user: getUserFromLocalStorage(),
 };
+
+export const registerUser = createAsyncThunk(
+  "user/registerUser",
+  async (user, thunkAPI) => {
+    try {
+      const resp = await customFetch.post("/auth/register", user);
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
 
 export const loginUser = createAsyncThunk(
   "user/loginUser",
@@ -49,6 +62,19 @@ export const userSlice = createSlice({
         toast.success("successfully logged in");
       })
       .addCase(loginUser.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
+      })
+      .addCase(registerUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        const { user, msg } = action.payload;
+        console.log(action, "chek user data after registering");
+        state.isLoading = false;
+        toast.success(msg);
+      })
+      .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
         toast.error(action.payload);
       });
