@@ -17,17 +17,17 @@ const Register = () => {
   const { isLoading, user } = useSelector((state) => state.user);
   console.log(user);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // console.log(user, "x");
   const [values, setValues] = useState(initialState);
   const [isValidEmail, setIsValidEmail] = useState(false);
 
-  useEffect(() => {
-    if (user) {
-      navigate("/");
-    }
-  }, [user, navigate]);
+  // useEffect(() => {
+  //   if (user) {
+  //     navigate("/");
+  //   }
+  // }, [user, navigate]);
 
   const validateEmail = (input) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

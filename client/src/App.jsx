@@ -1,5 +1,12 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Error, Layout, Menu, Register, Restaurants } from "./pages";
+import {
+  Error,
+  Layout,
+  Menu,
+  Register,
+  Restaurants,
+  ProtectedRoutes,
+} from "./pages";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -18,7 +25,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/register",
-        element: <Register />,
+        element: (
+          <ProtectedRoutes>
+            <Register />
+          </ProtectedRoutes>
+        ),
         errorElement: <Error />,
       },
     ],
