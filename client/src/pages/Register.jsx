@@ -61,8 +61,13 @@ const Register = () => {
 
     dispatch(registerUser({ email, password, name }));
     setValues(initialState);
-    // navigate("/register");
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   return (
     <Container
