@@ -14,7 +14,7 @@ const attachCookie = ({ res, user, refreshToken }) => {
   res.cookie("accessToken", access_token, {
     httpOnly: true,
     secure: false,
-    maxAge: 1000,
+    maxAge: 1000 * 60 * 15,
     // expires: new Date(Date.now() + day),
     // signed: true,
   });
