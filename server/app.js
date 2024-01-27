@@ -20,9 +20,9 @@ const authMiddleware = require("./middleware/authMiddleware");
 const { StatusCodes } = require("http-status-codes");
 
 app.use(morgan("dev"));
-app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
+app.use(express.json());
 
 // TEST
 app.get("/api/v1/test/:id", (req, res) => {
