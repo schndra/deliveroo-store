@@ -38,16 +38,27 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
+export const logoutUser = createAsyncThunk(
+  "user/logoutUser",
+  async (user, thunkAPI) => {
+    try {
+      const resp = await customFetch.delete("/auth/logout", user);
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    logoutUser: (state) => {
-      state.user = null;
-      removeUserFromLocalStorage();
-      toast.success("loging out");
-    },
+    // logoutUser: (state) => {
+    //   state.user = null;
+    //   removeUserFromLocalStorage();
+    //   toast.success("loging out");
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -77,11 +88,25 @@ export const userSlice = createSlice({
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
         toast.error(action.payload);
+      })
+      .addCase(logoutUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(logoutUser.fulfilled, (state, action) => {
+        const { msg } = action.payload;
+        state.isLoading = false;
+        state.user = null;
+        removeUserFromLocalStorage();
+        toast.success(msg);
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
       });
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { logoutUser } = userSlice.actions;
+// export const { logoutUser } = userSlice.actions;
 
 export default userSlice.reducer;
