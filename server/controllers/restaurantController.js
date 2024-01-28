@@ -1,5 +1,5 @@
 const { StatusCodes } = require("http-status-codes");
-const { Restaurant, Category } = require("../models");
+const { Restaurant, Category, Dish } = require("../models");
 const { NotFoundError } = require("../errors/custom-error");
 
 exports.getAllRestaurants = async (req, res) => {
@@ -22,7 +22,9 @@ exports.getRestaurantById = async (req, res) => {
     where: {
       id: Number(req.params.id),
     },
-    include: [{ model: Category, as: "categories" }],
+    include: [
+      { model: Category, as: "categories", include: [{ model: Dish }] },
+    ],
   });
 
   if (!r) {
