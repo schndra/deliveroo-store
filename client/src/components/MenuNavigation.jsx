@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { AppBar, Box, Button, Toolbar } from "@mui/material";
-import { useEffect, useState } from "react";
+import { AppBar, Box, Button, Container, Toolbar } from "@mui/material";
+import { useEffect, useRef, useState } from "react";
 
 // const navItems = [
 //   { link: "#", text: "New Daily Specials" },
@@ -20,6 +20,8 @@ const getSectionIndex = (sectionList, currPosition) => {
   sectionList.forEach((section, index) => {
     const { navItemRef, navItemID } = section;
     // console.log(section);
+    // console.log(navItemRef)
+    // console.log(section);
     if (window.scrollY + 100 >= navItemRef.current.offsetTop) {
       // console.log(section);
       // currentSection = section.
@@ -32,14 +34,22 @@ const getSectionIndex = (sectionList, currPosition) => {
 
 const MenuNavigation = ({ navItems }) => {
   const [activeSectionIndex, setActiveSectionIndex] = useState(0);
+  const menuBarSlider = useRef();
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentActiveIndex = getSectionIndex(navItems, window.scrollY);
-      console.log("active-index:", currentActiveIndex);
+      const currentActiveIndex = getSectionIndex(
+        navItems,
+        window.scrollY,
+        menuBarSlider
+      );
+      // console.log("active-index:", currentActiveIndex);
       setActiveSectionIndex(currentActiveIndex);
     };
     window.addEventListener("scroll", handleScroll);
+
+    menuBarSlider.current.scrollLeft += activeSectionIndex * 100;
+    // console.log(menuBarSlider.current, "yelow");
     return () => {
       document.removeEventListener("scroll", handleScroll);
     };
@@ -53,8 +63,20 @@ const MenuNavigation = ({ navItems }) => {
         top: "4.8rem",
       }}
     >
-      <Toolbar>
-        <Box>
+      <Container maxWidth="xl">
+        <Toolbar
+          sx={{
+            // width: "100%",
+            display: "flex",
+            gap: "1rem",
+            alignItems: "center",
+            py: "1rem",
+            overflow: "hidden",
+            scrollBehavior: "smooth",
+          }}
+          id="slider"
+          ref={menuBarSlider}
+        >
           {navItems.map((item, index) => {
             const { text, navItemID, navItemRef } = item;
 
@@ -63,9 +85,12 @@ const MenuNavigation = ({ navItems }) => {
                 disableRipple
                 key={index}
                 sx={{
+                  fontWeight: activeSectionIndex === index ? 600 : 400,
+                  fontSize: "14px",
+                  borderRadius: "3rem",
+                  textTransform: "none",
                   color:
                     activeSectionIndex === index ? "white" : "primary.main",
-                  textTransform: "none",
                   backgroundColor:
                     activeSectionIndex === index ? "primary.main" : "white",
                   ":hover": {
@@ -74,6 +99,9 @@ const MenuNavigation = ({ navItems }) => {
                     color:
                       activeSectionIndex === index ? "white" : "primary.light",
                   },
+                  py: 0,
+                  minWidth: `${text.length * 10}px`,
+                  whiteSpace: "nowrap",
                 }}
                 href={`#${navItemID}`}
               >
@@ -81,8 +109,8 @@ const MenuNavigation = ({ navItems }) => {
               </Button>
             );
           })}
-        </Box>
-      </Toolbar>
+        </Toolbar>
+      </Container>
     </AppBar>
   );
 };
