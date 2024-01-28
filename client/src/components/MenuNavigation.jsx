@@ -3,26 +3,26 @@ import { AppBar, Box, Button, Container, Toolbar } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 
 // const navItems = [
-//   { link: "#", text: "New Daily Specials" },
-//   { link: "#", text: "Salads" },
-//   { link: "#", text: "Hot Power Bowls" },
-//   { link: "#", text: "Gym food" },
-//   { link: "#", text: "Rainbow Wraps" },
-//   { link: "#", text: "Vegain Menu" },
-//   { link: "#", text: "Snacks & fruit" },
-//   { link: "#", text: "Cold Drinks" },
-//   { link: "#", text: "Smoothies, shakes & juice" },
+//   { link: "#", name: "New Daily Specials" },
+//   { link: "#", name: "Salads" },
+//   { link: "#", name: "Hot Power Bowls" },
+//   { link: "#", name: "Gym food" },
+//   { link: "#", name: "Rainbow Wraps" },
+//   { link: "#", name: "Vegain Menu" },
+//   { link: "#", name: "Snacks & fruit" },
+//   { link: "#", name: "Cold Drinks" },
+//   { link: "#", name: "Smoothies, shakes & juice" },
 // ];
 const getSectionIndex = (sectionList, currPosition) => {
   // console.log(currPosition)
   // console.log();
   let currActiveSectionIndex = 0;
   sectionList.forEach((section, index) => {
-    const { navItemRef, navItemID } = section;
-    // console.log(section);
-    // console.log(navItemRef)
-    // console.log(section);
-    if (window.scrollY + 100 >= navItemRef.current.offsetTop) {
+    const { slug } = section;
+
+    const element = document.getElementById(slug);
+
+    if (window.scrollY + 100 >= element.offsetTop) {
       // console.log(section);
       // currentSection = section.
       currActiveSectionIndex = index;
@@ -48,12 +48,12 @@ const MenuNavigation = ({ navItems }) => {
     };
     window.addEventListener("scroll", handleScroll);
 
-    menuBarSlider.current.scrollLeft += activeSectionIndex * 100;
+    // menuBarSlider.current.scrollLeft += activeSectionIndex * 100;
     // console.log(menuBarSlider.current, "yelow");
     return () => {
       document.removeEventListener("scroll", handleScroll);
     };
-  });
+  }, []);
 
   return (
     <AppBar
@@ -72,13 +72,15 @@ const MenuNavigation = ({ navItems }) => {
             alignItems: "center",
             py: "1rem",
             overflow: "hidden",
+            // overflowX: "auto",
             scrollBehavior: "smooth",
           }}
           id="slider"
           ref={menuBarSlider}
         >
           {navItems.map((item, index) => {
-            const { text, navItemID, navItemRef } = item;
+            // const { name, navItemID, navItemRef } = item;
+            const { name, slug } = item;
 
             return (
               <Button
@@ -100,12 +102,23 @@ const MenuNavigation = ({ navItems }) => {
                       activeSectionIndex === index ? "white" : "primary.light",
                   },
                   py: 0,
-                  minWidth: `${text.length * 10}px`,
+                  minWidth: `${name.length * 10}px`,
                   whiteSpace: "nowrap",
                 }}
-                href={`#${navItemID}`}
+                // href={`#${slug}`}
+                onClick={() => {
+                  // console.log(navItemRef.current);
+                  const ele = document.getElementById(slug);
+                  setActiveSectionIndex(index);
+                  ele.scrollIntoView({
+                    behavior: "smooth",
+                  });
+                  // navItemRef.current.scrollIntoView({
+                  //   behavior: "smooth",
+                  // });
+                }}
               >
-                {text}
+                {name}
               </Button>
             );
           })}
