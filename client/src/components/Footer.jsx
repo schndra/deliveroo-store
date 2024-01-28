@@ -116,6 +116,7 @@ const Footer = () => {
     px: isDesktopScreen ? 22 : 2,
     pt: 2,
     pb: 2,
+    mt: 4,
   };
 
   return (

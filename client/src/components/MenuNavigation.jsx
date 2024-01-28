@@ -60,7 +60,7 @@ const MenuNavigation = ({ navItems }) => {
       position="sticky"
       sx={{
         backgroundColor: "white",
-        top: "4.8rem",
+        top: "4.65rem",
       }}
     >
       <Container maxWidth="xl">
