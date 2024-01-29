@@ -5,6 +5,7 @@ import MenuNavigation from "./MenuNavigation";
 import { dummyCategoryData } from "../utils";
 import SingleMenuItem from "./SingleMenuItem";
 import Cart from "./Cart";
+import PopularItems from "./PopularItems";
 
 const MenuItems = () => {
   const menuSectionStyle = {
@@ -77,12 +78,20 @@ const MenuItems = () => {
   //   },
   // ];
 
+  const popularMenuItemList = dummyCategoryData.map((cat) =>
+    cat.dishes.filter((dish) => dish.popular === true)
+  );
+
+  const flattenedPopularItems = [].concat(...popularMenuItemList);
+  // console.log(flattenedPopularItems);
   // console.log(dummyCategoryData);
   return (
     <>
       <MenuNavigation navItems={dummyCategoryData} />
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={8}>
+          <PopularItems pupularItems={flattenedPopularItems} />
+
           {dummyCategoryData.map((catSection, index) => {
             // console.log(catSection);
             const { dishes, name, id, slug } = catSection;
