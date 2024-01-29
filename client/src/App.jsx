@@ -37,6 +37,15 @@ const router = createBrowserRouter([
         ),
         errorElement: <Error />,
       },
+      {
+        path: "/checkout",
+        element: (
+          <ProtectedRoutes>
+            <h1>Checkout</h1>
+          </ProtectedRoutes>
+        ),
+        errorElement: <Error />,
+      },
     ],
   },
 ]);
