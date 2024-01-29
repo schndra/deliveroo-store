@@ -40,7 +40,10 @@ const SingleMenuItem = ({ dishes }) => {
     maxWidth: "200px",
     overflow: "hidden",
     textOverflow: "ellipsis",
-    whiteSpace: "nowrap",
+    // whiteSpace: "pre-line",
+    display: "-webkit-box",
+    WebkitBoxOrient: "vertical",
+    WebkitLineClamp: 2,
   };
 
   return (
@@ -67,27 +70,43 @@ const SingleMenuItem = ({ dishes }) => {
                 <Typography sx={secondaryTextStyle}>£{price}</Typography>
               </Box>
 
-              <Avatar
-                variant="rounded"
-                sx={{ height: "100px", width: "100px" }}
-              >
-                {/* <FolderIcon /> */}
-                <img src={image} alt={name} />
-              </Avatar>
-
-              <Button
-                variant="outlined"
-                disableRipple
+              <Box
                 sx={{
-                  px: 1,
-                  height: "100px",
-                  minWidth: "50px",
-                  ml: "10px",
-                  textAlign: "center",
+                  display: "flex",
                 }}
               >
-                <AddOutlinedIcon />
-              </Button>
+                <Avatar
+                  variant="rounded"
+                  sx={{ height: "100px", width: "100px" }}
+                >
+                  {/* <FolderIcon /> */}
+                  <img src={image} alt={name} />
+                </Avatar>
+
+                <Button
+                  variant="outlined"
+                  disableRipple
+                  sx={{
+                    px: 1,
+                    height: "100px",
+                    minWidth: "50px",
+                    ml: "10px",
+                    textAlign: "center",
+                    border: "1px solid",
+                    borderColor: "secondary.100",
+                    ":hover": {
+                      bgcolor: "white",
+                      borderColor: "secondary.100",
+                    },
+                  }}
+                >
+                  <AddOutlinedIcon
+                    sx={{
+                      color: "secondary.200",
+                    }}
+                  />
+                </Button>
+              </Box>
             </Card>
           );
         })}

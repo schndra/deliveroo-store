@@ -89,7 +89,7 @@ const MenuItems = () => {
               <Box key={id + slug} sx={menuSectionStyle} id={slug}>
                 <Typography
                   variant="h2"
-                  sx={{ fontSize: "22px", fontWeight: "700" }}
+                  sx={{ fontSize: "22px", fontWeight: "700", mb:"1rem" }}
                 >
                   {name}
                 </Typography>
