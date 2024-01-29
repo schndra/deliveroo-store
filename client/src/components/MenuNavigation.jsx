@@ -112,6 +112,9 @@ const MenuNavigation = ({ navItems }) => {
                   setActiveSectionIndex(index);
                   ele.scrollIntoView({
                     behavior: "smooth",
+                    block: "start",
+                    inline: "nearest",
+                    // offsetTop: -500,
                   });
                   // navItemRef.current.scrollIntoView({
                   //   behavior: "smooth",

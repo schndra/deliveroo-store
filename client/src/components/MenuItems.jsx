@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import MenuNavigation from "./MenuNavigation";
 import { dummyCategoryData } from "../utils";
 import SingleMenuItem from "./SingleMenuItem";
+import Cart from "./Cart";
 
 const MenuItems = () => {
   const menuSectionStyle = {
@@ -89,7 +90,7 @@ const MenuItems = () => {
               <Box key={id + slug} sx={menuSectionStyle} id={slug}>
                 <Typography
                   variant="h2"
-                  sx={{ fontSize: "22px", fontWeight: "700", mb:"1rem" }}
+                  sx={{ fontSize: "22px", fontWeight: "700", mb: "1rem" }}
                 >
                   {name}
                 </Typography>
@@ -108,14 +109,7 @@ const MenuItems = () => {
             },
           }}
         >
-          <Box
-            position="sticky"
-            sx={{
-              top: "10rem",
-            }}
-          >
-            <h1>Cart container</h1>
-          </Box>
+          <Cart />
         </Grid>
       </Grid>
     </>
